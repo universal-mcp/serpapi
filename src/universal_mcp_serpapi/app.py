@@ -1,7 +1,7 @@
 import httpx
 from serpapi import SerpApiClient as SerpApiSearch
 
-from universal_mcp.applications.application import APIApplication
+from universal_mcp.applications import APIApplication
 
 
 class SerpapiApp(APIApplication):
