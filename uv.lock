@@ -2030,7 +2030,7 @@ wheels = [
 
 [[package]]
 name = "universal-mcp"
-version = "0.1.15"
+version = "0.1.17"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cookiecutter" },
@@ -2049,14 +2049,14 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/37/a3/b1d489844f9bb29c7d596445bd084292018f63c04af6b68aeb893f4d75de/universal_mcp-0.1.15.tar.gz", hash = "sha256:71cdd82abbdcb6a250dd59e9926aa8512adec7cce0b14beaa531412a1bcda4b0", size = 66075, upload-time = "2025-05-07T17:50:51.727Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/13/f1c4e97ee4b9e492740d241c24b38bb2984259714c95d2ccb2053f660fa9/universal_mcp-0.1.17.tar.gz", hash = "sha256:2cf09037ec2171ad61dd7eb575c4808f8f93c5c072b8f3c646e3860ca892823b", size = 65956, upload-time = "2025-05-14T04:00:07.279Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/d5/f3fe511daf793c74242ad169288a95c240d3f90dcafc8a1964595d7c0bc1/universal_mcp-0.1.15-py3-none-any.whl", hash = "sha256:5b320666a4fa677e1ed4f5ceb6b784f1c7a7e5a7f6753fbb46659a7c5f431303", size = 76433, upload-time = "2025-05-07T17:50:50.576Z" },
+    { url = "https://files.pythonhosted.org/packages/3c/36/daf4e59fc906fb1abe3866897fd0e5177bff35828cb570b793cb62b16605/universal_mcp-0.1.17-py3-none-any.whl", hash = "sha256:9d11e21a9d05663a7d8612e729503585ca10b91d3ff2008dd45fbf484a573ad0", size = 76473, upload-time = "2025-05-14T04:00:06.192Z" },
 ]
 
 [[package]]
 name = "universal-mcp-serpapi"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "google-search-results" },
@@ -2080,7 +2080,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'test'", specifier = ">=7.0.0,<9.0.0" },
     { name = "pytest-cov", marker = "extra == 'test'" },
     { name = "ruff", marker = "extra == 'dev'" },
-    { name = "universal-mcp", specifier = ">=0.1.11" },
+    { name = "universal-mcp", specifier = ">=0.1.17" },
 ]
 provides-extras = ["test", "dev"]
 
