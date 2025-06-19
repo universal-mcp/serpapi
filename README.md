@@ -14,7 +14,7 @@ If you have not used universal mcp before follow the setup instructions at [agen
 
 ## Available Tools
 
-The full list of available tools is at [./src/universal_mcp_serpapi/README.md](./src/universal_mcp_serpapi/README.md)
+The full list of available tools is at [Tools](./src/universal_mcp_serpapi/README.md)
 
 ## Local Development
 
