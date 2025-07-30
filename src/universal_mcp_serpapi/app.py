@@ -13,6 +13,7 @@ class SerpapiApp(APIApplication):
     def __init__(self, integration: Integration | None = None, **kwargs: Any) -> None:
         super().__init__(name="serpapi", integration=integration, **kwargs)
         self._serpapi_api_key: str | None = None  # Cache for the API key
+        self.base_url = "https://serpapi.com/search"
 
     @property
     def serpapi_api_key(self) -> str:
@@ -147,7 +148,90 @@ class SerpapiApp(APIApplication):
                 raise NotAuthorizedError(f"SerpApi authentication/authorization failed: {str(e)}")
             return f"An unexpected error occurred during search: {str(e)}"
 
+    async def google_maps_search(
+        self,
+        q: str,
+        ll: Optional[str] = None,
+    ) -> dict[str, Any]:
+        """
+        Performs a Google Maps search using the SerpApi service and returns formatted search results.
+
+        Args:
+            q (string): The search query for Google Maps (e.g., "Coffee", "Restaurants", "Gas stations").
+            ll (string, optional): Latitude and longitude with zoom level in format "@lat,lng,zoom" (e.g., "@40.7455096,-74.0083012,14z"). The zoom attribute ranges from 3z (map completely zoomed out) to 21z (map completely zoomed in). Results are not guaranteed to be within the requested geographic location.
+
+        Returns:
+            dict[str, Any]: Formatted Google Maps search results with place names, addresses, ratings, and other details.
+
+        Raises:
+            ValueError: Raised when required parameters are missing.
+            HTTPStatusError: Raised when the API request fails with detailed error information including status code and response body.
+
+        Tags:
+            google-maps, search, location, places, important
+        """
+        
+        query_params = {}
+        query_params = {
+            "engine": "google_maps",
+            "q": q,
+            "api_key": self.serpapi_api_key,
+        }
+        
+        if ll is not None:
+            query_params["ll"] = ll
+        
+        response = self._get(
+            self.base_url,
+            params=query_params,
+        )
+        return self._handle_response(response)
+
+    async def get_google_maps_reviews(
+        self,
+        data_id: str,
+        hl: Optional[str] = None,
+    ) -> dict[str, Any]:
+        """
+        Retrieves Google Maps reviews for a specific place using the SerpApi service.
+
+        Args:
+            data_id (string): The data ID of the place to get reviews for (e.g., "0x89c259af336b3341:0xa4969e07ce3108de").
+            hl (string, optional): Language parameter for the search results. Defaults to "en".
+
+        Returns:
+            dict[str, Any]: Google Maps reviews data with ratings, comments, and other review details.
+
+        Raises:
+            ValueError: Raised when required parameters are missing.
+            HTTPStatusError: Raised when the API request fails with detailed error information including status code and response body.
+
+        Tags:
+            google-maps, reviews, ratings, places, important
+        """
+        
+        query_params = {}
+        query_params = {
+            "engine": "google_maps_reviews",
+            "data_id": data_id,
+            "api_key": self.serpapi_api_key,
+        }
+        
+        if hl is not None:
+            query_params["hl"] = hl
+        else:
+            query_params["hl"] = "en"
+        
+        response = self._get(
+            self.base_url,
+            params=query_params,
+        )
+        return self._handle_response(response)
+
+ 
     def list_tools(self) -> list[callable]:
         return [
             self.search,
+            self.google_maps_search,
+            self.get_google_maps_reviews,
         ]
