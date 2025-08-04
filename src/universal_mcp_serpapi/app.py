@@ -150,15 +150,17 @@ class SerpapiApp(APIApplication):
 
     async def google_maps_search(
         self,
-        q: str,
+        q: Optional[str] = None,
         ll: Optional[str] = None,
+        place_id: Optional[str] = None,
     ) -> dict[str, Any]:
         """
         Performs a Google Maps search using the SerpApi service and returns formatted search results.
 
         Args:
-            q (string): The search query for Google Maps (e.g., "Coffee", "Restaurants", "Gas stations").
+            q (string, optional): The search query for Google Maps (e.g., "Coffee", "Restaurants", "Gas stations").
             ll (string, optional): Latitude and longitude with zoom level in format "@lat,lng,zoom" (e.g., "@40.7455096,-74.0083012,14z"). The zoom attribute ranges from 3z (map completely zoomed out) to 21z (map completely zoomed in). Results are not guaranteed to be within the requested geographic location.
+            place_id (string, optional): The unique reference to a place in Google Maps. Place IDs are available for most locations, including businesses, landmarks, parks, and intersections. You can find the place_id using our Google Maps API. place_id can be used without any other optional parameter. place_id and data_cid can't be used together.
 
         Returns:
             dict[str, Any]: Formatted Google Maps search results with place names, addresses, ratings, and other details.
@@ -174,12 +176,17 @@ class SerpapiApp(APIApplication):
         query_params = {}
         query_params = {
             "engine": "google_maps",
-            "q": q,
             "api_key": self.serpapi_api_key,
         }
         
+        if q is not None:
+            query_params["q"] = q
+        
         if ll is not None:
             query_params["ll"] = ll
+        
+        if place_id is not None:
+            query_params["place_id"] = place_id
         
         response = self._get(
             self.base_url,
