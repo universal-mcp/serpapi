@@ -192,7 +192,15 @@ class SerpapiApp(APIApplication):
             self.base_url,
             params=query_params,
         )
-        return self._handle_response(response)
+        data = self._handle_response(response)
+        
+        # Add Google Maps URLs for each place in the results
+        if "local_results" in data:
+            for place in data["local_results"]:
+                if "place_id" in place:
+                    place["google_maps_url"] = f"https://www.google.com/maps/place/?q=place_id:{place['place_id']}"
+        
+        return data
 
     async def get_google_maps_reviews(
         self,
